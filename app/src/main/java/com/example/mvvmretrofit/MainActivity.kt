@@ -1,11 +1,73 @@
 package com.example.mvvmretrofit
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import com.example.mvvmretrofit.data.api.ApiService
+import com.example.mvvmretrofit.data.api.Apis
+import com.example.mvvmretrofit.data.model.Posts
+import com.example.mvvmretrofit.databinding.ActivityMainBinding
+import com.example.mvvmretrofit.ui.base.BaseActivity
+import com.example.mvvmretrofit.ui.main.MainViewModel
+import com.example.mvvmretrofit.utils.Status
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity() {
+
+class MainActivity : BaseActivity() {
+    var binding:ActivityMainBinding? = null
+
+    val mViewModel by viewModels<MainViewModel> ()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding?.apply {
+            setContentView(this.root)
+        }
+        init()
+    }
+
+    override fun initArguments() {
+        mViewModel.getPosts()
+    }
+
+    override fun initViews() {
+    }
+
+    override fun setupListener() {
+        binding?.referesh?.setOnClickListener {
+            mViewModel.getPosts()
+        }
+    }
+
+    override fun loadData() {
+        mViewModel.postsResponse.observe(this, Observer {
+            it?:return@Observer
+            when(it.status){
+                Status.SUCCESS ->{
+                    val posts  = it.data
+                    if (posts != null) {
+                        for (post in posts) {
+                            var content: String = ""
+                            content += "Id: ${post.id} \n"
+                            content += "UserId: ${post.userId} \n"
+                            content += "Title: ${post.title} \n"
+                            content += "Text: ${post.description} \n"
+                            binding?.textViewResult?.append(content)
+                        }
+                    }
+                }
+                Status.ERROR ->{
+
+                }
+                Status.LOADING ->{
+
+                }
+            }
+        })
+
     }
 }
