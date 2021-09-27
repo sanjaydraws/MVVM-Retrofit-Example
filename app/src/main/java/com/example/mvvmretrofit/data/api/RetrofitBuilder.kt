@@ -7,6 +7,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+/**
+ * @author Sanjay Prajapat
+ * time : 27-09-2021 On 11:55 PM
+ * */
+
+
+
 object RetrofitBuilder {
 
 
@@ -19,8 +26,7 @@ object RetrofitBuilder {
         //log http request & response with logging interceptor
         var httpClient:OkHttpClient.Builder = OkHttpClient.Builder()
         httpClient.addInterceptor(interceptor())
-        var retrofit:Retrofit = builder.client(httpClient.build())
-                                .build()
+        var retrofit:Retrofit = builder.client(httpClient.build()).build()
         return retrofit
     }
 
