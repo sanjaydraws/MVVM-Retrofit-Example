@@ -70,4 +70,8 @@ dependencies {
     //fragment ktx
     implementation("androidx.fragment:fragment-ktx:1.3.6")
 
+
+    //log http request & response with logging interceptor
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
 }
