@@ -9,6 +9,6 @@ import retrofit2.http.GET
 interface ApiService {
 
     @GET("posts")
-     fun getPosts(): Call<Resource<List<Posts>>>
+     fun getPosts(): Call<List<Posts>>
 
 }

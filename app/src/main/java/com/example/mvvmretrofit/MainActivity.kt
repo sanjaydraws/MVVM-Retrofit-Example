@@ -46,9 +46,9 @@ class MainActivity : BaseActivity() {
     override fun loadData() {
         mViewModel.postsResponse.observe(this, Observer {
             it?:return@Observer
-            when(it.status){
-                Status.SUCCESS ->{
-                    val posts  = it.data
+//            when(it.status){
+//                Status.SUCCESS ->{
+                    val posts  = it
                     if (posts != null) {
                         for (post in posts) {
                             var content: String = ""
@@ -59,14 +59,14 @@ class MainActivity : BaseActivity() {
                             binding?.textViewResult?.append(content)
                         }
                     }
-                }
-                Status.ERROR ->{
-
-                }
-                Status.LOADING ->{
-
-                }
-            }
+//                }
+//                Status.ERROR ->{
+//
+//                }
+//                Status.LOADING ->{
+//
+//                }
+//            }
         })
 
     }
