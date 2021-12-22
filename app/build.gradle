@@ -74,4 +74,8 @@ dependencies {
     //log http request & response with logging interceptor
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
 
+    // chucker implementation
+    debugImplementation "com.github.chuckerteam.chucker:library:3.5.2"
+    releaseImplementation "com.github.chuckerteam.chucker:library-no-op:3.5.2"
+
 }

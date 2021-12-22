@@ -9,6 +9,7 @@ import retrofit2.Response
 
 
 class PostsRepository(private val apiService: ApiService) {
+
     fun getPosts(mListener: OperationCallback<List<Posts>>) = apiService.getPosts().enqueue(object :
         Callback<List<Posts>> {
         override fun onResponse(

@@ -52,4 +52,5 @@ object RetrofitBuilder {
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return httpLoggingInterceptor
     }
+    
 }
