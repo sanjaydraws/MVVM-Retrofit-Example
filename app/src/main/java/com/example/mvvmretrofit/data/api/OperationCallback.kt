@@ -7,5 +7,5 @@ package com.example.mvvmretrofit.data.api
 
 interface OperationCallback<T> {
     fun onResponse(data:T?)
-    fun onError(message:String?)
+    fun onError(data:T?,message:String?)
 }

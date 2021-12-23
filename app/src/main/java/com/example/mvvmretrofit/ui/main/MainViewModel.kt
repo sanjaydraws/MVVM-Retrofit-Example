@@ -6,17 +6,19 @@ import com.example.mvvmretrofit.data.api.OperationCallback
 import com.example.mvvmretrofit.data.api.RetrofitBuilder
 import com.example.mvvmretrofit.data.model.Posts
 import com.example.mvvmretrofit.data.repository.PostsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import javax.inject.Inject
 
 
-class MainViewModel() : ViewModel() {
+@HiltViewModel
+class MainViewModel @Inject constructor(private val postsRepository:PostsRepository) : ViewModel() {
 
-    private val postsRepository: PostsRepository = PostsRepository(RetrofitBuilder.apiService)
-    private val _postsResponse:MutableLiveData<List<Posts>> = MutableLiveData()
-    val postsResponse:MutableLiveData<List<Posts>> =_postsResponse
+    private val _postsResponse: MutableLiveData<List<Posts>?> = MutableLiveData()
+    val postsResponse: MutableLiveData<List<Posts>?> =_postsResponse
 
 
     fun getPosts() {
@@ -27,10 +29,12 @@ class MainViewModel() : ViewModel() {
                     _postsResponse.postValue(data)
                 }
 
-                override fun onError(message: String?) {
+                override fun onError(data: List<Posts>?, message: String?) {
                     // _postsResponse.postValue(Resource.error(data = null,message ="Error Occured"))
                     // _postsResponse.postValue(Resource.error(message = t.message.toString()))
                 }
+
+
             })
         }
     }

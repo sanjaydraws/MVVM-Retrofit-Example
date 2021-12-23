@@ -31,7 +31,7 @@ object RetrofitBuilder {
     val gson:Gson = GsonBuilder().serializeNulls().create() // it will show request keys with null
 
     @Provides
-    private fun getRetrofit(): Retrofit {
+     fun getRetrofit(): Retrofit {
         val builder: Retrofit.Builder = Retrofit.Builder()
             .baseUrl(Apis.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
@@ -68,7 +68,7 @@ object RetrofitBuilder {
 
     @Provides
     @Singleton
-    private fun interceptor(): HttpLoggingInterceptor {
+     fun interceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return httpLoggingInterceptor
