@@ -2,25 +2,33 @@ package com.example.mvvmretrofit.ui.main
 
 import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
-import com.example.mvvmretrofit.data.api.OperationCallback
-import com.example.mvvmretrofit.data.api.RetrofitBuilder
-import com.example.mvvmretrofit.data.model.Posts
-import com.example.mvvmretrofit.data.repository.PostsRepository
+import com.example.mvvmretrofit.data.model.AllPosts
+import com.example.mvvmretrofit.data.repository.UserPostsRepository
+import com.example.mvvmretrofit.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import javax.inject.Inject
 
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val postsRepository:PostsRepository) : ViewModel() {
+class MainViewModel @Inject constructor(private val postsRepository:UserPostsRepository) : ViewModel() {
 
-    private val _postsResponse: MutableLiveData<List<Posts>?> = MutableLiveData()
-    val postsResponse: MutableLiveData<List<Posts>?> =_postsResponse
+//    private val _postsResponse: MutableLiveData<List<Posts>?> = MutableLiveData()
+//    val postsResponse: MutableLiveData<List<Posts>?> =_postsResponse
 
 
+    private val _userPostResponse: MutableLiveData<Resource<AllPosts>> = MutableLiveData()
+    val userPostResponse: MutableLiveData<Resource<AllPosts>> =_userPostResponse
+    fun getPosts(){
+        viewModelScope.launch {
+            _userPostResponse.postValue(Resource.loading())
+            val response = postsRepository.getPosts()
+            _userPostResponse.postValue(response)
+
+        }
+    }
+
+    /*
     fun getPosts() {
         viewModelScope.launch {
 //            _postsResponse.postValue(Resource.loading())
@@ -38,6 +46,7 @@ class MainViewModel @Inject constructor(private val postsRepository:PostsReposit
             })
         }
     }
+    */
 
 }
 

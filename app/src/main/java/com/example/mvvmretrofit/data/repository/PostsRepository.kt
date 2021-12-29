@@ -3,7 +3,6 @@ package com.example.mvvmretrofit.data.repository
 import android.content.Context
 import com.example.mvvmretrofit.R
 import com.example.mvvmretrofit.data.api.ApiService
-import com.example.mvvmretrofit.data.api.ApiServiceImpl
 import com.example.mvvmretrofit.data.api.OperationCallback
 import com.example.mvvmretrofit.data.model.Posts
 import com.example.mvvmretrofit.utils.isConnectedToInternet
@@ -13,10 +12,10 @@ import retrofit2.Callback
 import retrofit2.Response
 import javax.inject.Inject
 
+/*
+class PostsRepository @Inject constructor(@ApplicationContext val context: Context?, private val apiService: ApiServiceImpl) {
 
-class PostsRepository @Inject constructor(@ApplicationContext val context: Context?, private val apiServiceImpl: ApiServiceImpl) {
-
-    suspend fun getPosts(mListener: OperationCallback<List<Posts>>) = apiServiceImpl.getPosts().enqueue(object :
+    suspend fun getPosts(mListener: OperationCallback<List<Posts>>) = apiService.getPosts().enqueue(object :
         Callback<List<Posts>> {
         override fun onResponse(
             call: Call<List<Posts>>,
@@ -40,3 +39,4 @@ class PostsRepository @Inject constructor(@ApplicationContext val context: Conte
 
 
 }
+ */

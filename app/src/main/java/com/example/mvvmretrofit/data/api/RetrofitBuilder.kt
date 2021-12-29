@@ -1,10 +1,14 @@
 package com.example.mvvmretrofit.data.api
 
+import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.example.mvvmretrofit.utils.SharedPreferencesHelper
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -21,19 +25,15 @@ import javax.inject.Singleton
  * */
 
 
-
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitBuilder {
-
-
-
-    val gson:Gson = GsonBuilder().serializeNulls().create() // it will show request keys with null
+    private val gson: Gson = GsonBuilder().serializeNulls().create() // it will show request keys with null
 
     @Provides
-     fun getRetrofit(): Retrofit {
+    fun getRetrofit(@ApplicationContext context: Context, sharedPreferencesHelper: SharedPreferencesHelper): Retrofit {
         val builder: Retrofit.Builder = Retrofit.Builder()
-            .baseUrl(Apis.BASE_URL)
+            .baseUrl(Apis.API_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
 
         //log http request & response with logging interceptor
@@ -42,17 +42,15 @@ object RetrofitBuilder {
             override fun intercept(chain: Interceptor.Chain): Response {
                 val originalRequest: Request = chain.request()
                 val newRequest: Request = originalRequest.newBuilder()
-                    .addHeader("Interceptor-Header", "xyz")
-                    .addHeader(
-                        "Authorization",
-                        "h38278sqjsgkjq82u,ebqmxbausiwgey2iemwbsliwhrowirh bms"
-                    )//login token
-                    .addHeader("Language", "en")
+//                    .addHeader("Interceptor-Header", "xyz")
+//                    .addHeader("Authorization", sharedPreferencesHelper.getLoginToken() ?:"")//login token
+//                    .addHeader("Language", "en")
                     .build()
                 return chain.proceed(newRequest)
             }
         }).addInterceptor(
-            interceptor())
+            interceptor()).addInterceptor(
+            ChuckerInterceptor.Builder(context).build())
 
         return builder.client(httpClient.build()).build()
     }
@@ -61,14 +59,14 @@ object RetrofitBuilder {
     @Provides
     @Singleton
     fun provideApiService(retrofit: Retrofit) : ApiService {
-       return retrofit.create(ApiService::class.java)
+        return retrofit.create(ApiService::class.java)
     }
 
 
 
     @Provides
     @Singleton
-     fun interceptor(): HttpLoggingInterceptor {
+    fun interceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return httpLoggingInterceptor

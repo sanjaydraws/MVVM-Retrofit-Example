@@ -1,6 +1,6 @@
 package com.example.mvvmretrofit.data.api
 
 object Apis {
-    const val BASE_URL = "https://jsonplaceholder.typicode.com/"
+    const val API_URL = "https://jsonplaceholder.typicode.com/"
 
 }

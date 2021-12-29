@@ -48,27 +48,29 @@ class MainActivity : BaseActivity() {
     }
 
     override fun loadData() {
-        mViewModel.postsResponse.observe(this, Observer {
+        mViewModel.userPostResponse.observe(this, Observer {
             it?:return@Observer
-//            when(it.status){
-//                Status.SUCCESS ->{
-                    val posts  = it
-            for (post in posts) {
-                var content: String = ""
-                content += "Id: ${post.id} \n"
-                content += "UserId: ${post.userId} \n"
-                content += "Title: ${post.title} \n"
-                content += "Text: ${post.description} \n"
-                binding?.textViewResult?.append(content)
+            when(it.status){
+                Status.SUCCESS ->{
+                    val posts  = it.data?.allPosts
+            if (posts != null) {
+                for (post in posts) {
+                    var content: String = ""
+                    content += "Id: ${post.id} \n"
+                    content += "UserId: ${post.userId} \n"
+                    content += "Title: ${post.title} \n"
+                    content += "Text: ${post.description} \n"
+                    binding?.textViewResult?.append(content)
+                }
             }
-//                }
-//                Status.ERROR ->{
-//
-//                }
-//                Status.LOADING ->{
-//
-//                }
-//            }
+                }
+                Status.ERROR ->{
+
+                }
+                Status.LOADING ->{
+
+                }
+            }
         })
 
 
