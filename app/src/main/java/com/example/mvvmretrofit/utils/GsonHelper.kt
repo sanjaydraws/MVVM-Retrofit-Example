@@ -11,7 +11,7 @@ import java.lang.reflect.Type
  * Time : 24/09/2021 on 12:23 AM
  *
  * */
-class GsonHelper( val gson: Gson?){
+class GsonHelper ( val gson: Gson?){
 
     /**
      * convert object to json

@@ -1,21 +1,15 @@
 package com.example.mvvmretrofit
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
-import com.example.mvvmretrofit.data.api.ApiService
-import com.example.mvvmretrofit.data.api.Apis
-import com.example.mvvmretrofit.data.model.Posts
 import com.example.mvvmretrofit.databinding.ActivityMainBinding
 import com.example.mvvmretrofit.ui.base.BaseActivity
 import com.example.mvvmretrofit.ui.main.MainViewModel
 import com.example.mvvmretrofit.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 
 @AndroidEntryPoint
@@ -65,7 +59,7 @@ class MainActivity : BaseActivity() {
             }
                 }
                 Status.ERROR ->{
-
+                    Toast.makeText(this,it.message, Toast.LENGTH_LONG).show()
                 }
                 Status.LOADING ->{
 
