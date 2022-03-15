@@ -31,7 +31,8 @@ object RetrofitBuilder {
     private val gson: Gson = GsonBuilder().serializeNulls().create() // it will show request keys with null
 
     @Provides
-    fun getRetrofit(@ApplicationContext context: Context, sharedPreferencesHelper: SharedPreferencesHelper): Retrofit {
+    fun getRetrofit(@ApplicationContext context: Context,
+                    sharedPreferencesHelper: SharedPreferencesHelper): Retrofit {
         val builder: Retrofit.Builder = Retrofit.Builder()
             .baseUrl(Apis.API_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
